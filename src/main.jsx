@@ -6,26 +6,33 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import Home from "./Component/Home/Home";
-import Header from "./Component/Header/Header";
 import About from "./Component/About/About";
 import Contact from "./Component/Contact/Contact";
+import Users from "./Component/Users/Users";
+import UserDetails from "./Component/Users/UserDetails"
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home></Home>,
-    children:[
+    children: [
       {
         path: "/about",
         element: <About></About>
       },
       {
-        path:'/contact',
+        path: '/contact',
         element: <Contact></Contact>
       },
       {
-        path: "header",
-        element: <Header></Header>
+        path: "/users",
+        loader: ()=>fetch('https://jsonplaceholder.typicode.com/users'),
+        element: <Users></Users>
+      },
+      {
+        path: '/user/:id',
+        loader: ({params})=> fetch(`https://jsonplaceholder.typicode.com/users/${params.id}`),
+        element: <UserDetails></UserDetails>
       }
     ]
   },
